@@ -4,16 +4,31 @@
 #include <poll.h>
 #include <stdbool.h>
 
+#include "server.h"
 #include "properties.h"
 #include "utils.h"
 
 int main()
+{
+    int sockfd = initServer();
+
+    struct pollfd *fds = initPollfd(sockfd);
+
+    runServer(sockfd, fds);
+}
+
+int initServer()
 {
     int sockfd = ssocket();
 
     sbind(PORT, sockfd);
     slisten(sockfd, MAX_SIZE);
 
+    return sockfd;
+}
+
+struct pollfd *initPollfd(int sockfd)
+{
     struct pollfd *fds = smalloc(sizeof(struct pollfd) * MAX_SIZE);
 
     for (int i = 0; i < MAX_SIZE; i++)
@@ -22,7 +37,10 @@ int main()
         fds[i].events = POLLIN;
         fds[i].revents = 0;
     }
+    return fds;
+}
 
+void runServer(int sockfd, struct pollfd *fds){
     while (true)
     {
         spoll(fds, 2, -1);
@@ -36,6 +54,10 @@ int main()
                 if (sizeRead == 0)
                 {
                     sclose(sockfd);
+
+                    free(buffer);
+                    free(fds);
+
                     exit(EXIT_SUCCESS);
                 }
                 for (int j = 0; j < sizeRead; j++)
