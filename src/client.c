@@ -4,8 +4,8 @@
 #include <poll.h>
 #include <stdbool.h>
 
-#include "properties.h"
 #include "client.h"
+#include "properties.h"
 #include "utils.h"
 
 int main()
