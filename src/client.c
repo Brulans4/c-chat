@@ -19,11 +19,11 @@ int main()
     int pid = sfork();
     if (pid == 0)
     {
-        parentProcess(sockfd);
+        childProcess(sockfd);
     }
     else
     {
-        childProcess(sockfd);
+        parentProcess(sockfd);
     }
     exit(EXIT_SUCCESS);
 }
