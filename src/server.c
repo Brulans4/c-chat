@@ -43,7 +43,7 @@ struct pollfd *initPollfd(int sockfd)
 void runServer(int sockfd, struct pollfd *fds){
     while (true)
     {
-        spoll(fds, 2, -1);
+        spoll(fds, MAX_SIZE, -1);
         char *buffer = smalloc(sizeof(char) * 255);
 
         for (int i = 0; i < MAX_SIZE; i++)
