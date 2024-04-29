@@ -36,6 +36,8 @@ struct pollfd *initPollfd(int sockfd, int maxSize)
     fds[i].fd = saccept(sockfd);
     fds[i].events = POLLIN;
     fds[i].revents = 0;
+
+    printf("Client %d connected\n", i + 1);
   }
   return fds;
 }
@@ -45,7 +47,7 @@ void runServer(int sockfd, struct pollfd *fds, int maxSize)
   while (true)
   {
     spoll(fds, maxSize, -1);
-    char *buffer = smalloc(sizeof(char) * 255);
+    char *buffer = smalloc(sizeof(char) * MAX_LINE_LENGTH);
 
     for (int i = 0; i < maxSize; i++)
     {
