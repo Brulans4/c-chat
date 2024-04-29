@@ -5,17 +5,19 @@
 #include <stdbool.h>
 
 #include "client.h"
-#include "properties.h"
 #include "utils.h"
+#include "config.h" 
 
+/**
+ * @brief Entry point of the C Chat program.
+ */
 int main()
 {
     printf("Welcome to C Chat\n");
 
     int sockfd = ssocket();
-    sconnect(LOCAL_HOST, PORT, sockfd);
+    sconnect(IP, PORT, sockfd);
     printf("You are now connected\n");
-
     int pid = sfork();
     if (pid == 0)
     {
@@ -25,6 +27,8 @@ int main()
     {
         parentProcess(sockfd);
     }
+    sclose(sockfd);
+
     exit(EXIT_SUCCESS);
 }
 
@@ -32,7 +36,7 @@ void parentProcess(int sockfd)
 {
     while (true)
     {
-        char *buffer = smalloc(sizeof(char) * 255);
+        char *buffer = smalloc(sizeof(char) * MAX_LINE_LENGTH);
 
         int readsize = sread(0, buffer, sizeof(buffer));
         if (readsize == 0)
@@ -49,7 +53,7 @@ void childProcess(int sockfd)
 {
     while (true)
     {
-        char *buffer = smalloc(sizeof(char) * 255);
+        char *buffer = smalloc(sizeof(char) * MAX_LINE_LENGTH);
 
         int readsize = sread(sockfd, buffer, sizeof(buffer));
         if (readsize == 0)

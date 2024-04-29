@@ -22,7 +22,7 @@ int initServer();
  * @param sockfd The socket file descriptor.
  * @return A pointer to the initialized pollfd structure.
  */
-struct pollfd *initPollfd(int sockfd);
+struct pollfd *initPollfd(int sockfd, int maxSize);
 
 /**
  * Runs the server to handle incoming messages.
@@ -30,6 +30,6 @@ struct pollfd *initPollfd(int sockfd);
  * @param sockfd The socket file descriptor for the server.
  * @param fds The array of pollfd structures for polling events.
  */
-void runServer(int sockfd, struct pollfd *fds);
+void runServer(int sockfd, struct pollfd *fds, int maxSize);
 
 #endif // _SERVER_H_
