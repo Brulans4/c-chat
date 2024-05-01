@@ -57,6 +57,3 @@ dkms.conf
 # executables
 server
 client
-
-# config files
-config.h
