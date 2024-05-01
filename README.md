@@ -18,7 +18,7 @@ Welcome to the C Chat Application! This project provides a simple chat system im
 1. **Clone the Repository**: Clone this repository to your local machine using the following command:
 
     ```
-    git clone <repository_url>
+    git clone https://github.com/Brulans4/c-chat.git
     ```
 
 2. **Compile the Code**: Navigate to the project directory and compile the server and client programs using the provided Makefile:
